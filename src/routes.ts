@@ -13,8 +13,6 @@ export default class Routes {
 	}
 
 	private initializeRoutes(): void {
-		this.router.get('/', (req: Request, res: Response) =>
-			this.handlers.Home(req, res)
-		);
+		this.router.get('/', (req: Request, res: Response) => this.handlers.Home(req, res));
 	}
 }

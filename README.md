@@ -30,6 +30,10 @@ The following technologies are used in this project:
 - **ChartJS**: JavaScript library for creating graphs and charts.
 - **pg (PostgreSQL)**: Node.js client for interacting with a PostgreSQL database.
 
+## Online Demo
+
+[demo](https://api.paranoids.us/shopkeeper)
+
 ## Instructions
 
 Follow these steps to set up and run the project locally:

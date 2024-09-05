@@ -1,0 +1,80 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopkeeper
+  labels:
+    app: shopkeeper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopkeeper
+  template:
+    metadata:
+      labels:
+        app: shopkeeper
+    spec:
+      containers:
+        - name: shopkeeper
+          image: registry.paranoids.us/shopkeeper:main
+          imagePullPolicy: Always
+          env:
+            - name: HOST
+              value: 0.0.0.0
+            - name: PORT
+              value: '3000'
+            - name: DB_HOST
+              value: '192.168.105.123'
+            - name: DB_PORT
+              value: '5432'
+            - name: DB_USERNAME
+              value: ''
+            - name: DB_PASSWORD
+              value: ''
+            - name: DB_NAME
+              value: 'test_assignment'
+          ports:
+            - containerPort: 4000
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopkeeper-svc
+spec:
+  selector:
+    app: shopkeeper
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: external-ingress-apps-service
+  annotations:
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - api.paranoids.us
+      secretName: paranoids-tls
+  rules:
+    - host: api.paranoids.us
+      http:
+        paths:
+          - pathType: Prefix
+            path: /shopkeeper(/|$)(.*)
+            backend:
+              service:
+                name: shopkeeper-svc
+                port:
+                  number: 80

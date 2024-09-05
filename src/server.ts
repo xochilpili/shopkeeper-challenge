@@ -38,9 +38,9 @@ export default class ServerExpress {
 		this._instance.use(pinoHttp({ logger: pinoLogger }));
 
 		const dbConfig: DatabaseOptions = {
-			user: getConfig('/database/user'),
 			host: getConfig('/database/host'),
 			database: getConfig('/database/database'),
+			user: getConfig('/database/username'),
 			password: getConfig('/database/password'),
 			port: getConfig('/database/port'),
 		};
