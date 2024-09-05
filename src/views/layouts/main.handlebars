@@ -1,0 +1,79 @@
+<!-- Template take from Bootstrap 4.5.0 example -->
+<html>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!-- Bootstrap CSS from CDN -->
+	<link href="css/bootstrap.min.css" rel="stylesheet"/>
+	<!-- Custom CSS -->
+	<link href="css/dashboard.css" rel="stylesheet"/>
+	<head>
+		<title>{{{title}}}</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+			<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">{{{company}}}</a>
+			<!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
+			<ul class="navbar-nav px-3">
+				<li class="nav-item text-nowrap">
+					<a class="nav-link" href="#">Sign out</a>
+				</li>
+			</ul>
+		</nav>
+		<div class="container-fluid">
+			<div class="row">
+				<!-- sidebar panel -->
+				<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+					<div class="sidebar-sticky">
+						<ul class="nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link active" href="#">
+								<span data-feather="home"></span>
+								Dashboard <span class="sr-only">(current)</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+				<!-- end sidebar panel -->
+				<!-- main content -->
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+         			{{{body}}}
+				</main>
+				<!-- end main content -->
+			</div>
+		</div>
+		<!-- jQuery and Bootstrap JS from CDN -->
+		<script src="css/js/jquery-3.5.1.slim.min.js"></script>
+		<script src="css/js/popper.min.js"></script>
+		<script	src="css/js/bootstrap.min.js"></script>
+		<!-- Icons -->
+		<script src="css/js/feather.min.js"></script>
+		<script>
+			feather.replace()
+		</script>
+		<!-- Graphs -->
+    	<script src="css/js/chart.js"></script>
+		<script>
+		const ctx = document.getElementById("myChart");
+		const myChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: {{{json labels}}},
+				datasets: {{{json dataset}}},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: false
+							}
+						}],
+					},
+					legend: {
+						display: false,
+					}
+				}
+			}
+		});
+    </script>
+	</body>
+</html>
