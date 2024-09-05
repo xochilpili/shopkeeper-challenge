@@ -8,7 +8,6 @@ import { get as getConfig } from './config';
 import { Server } from 'http';
 import Routes from './routes';
 import { DatabaseManager, DatabaseOptions } from './db';
-import { json } from 'stream/consumers';
 
 export default class ServerExpress {
 	private static logger: Logger = pinoLogger;
@@ -21,6 +20,7 @@ export default class ServerExpress {
 		const port = getConfig('/service/port');
 
 		this._instance = express();
+
 		this._instance.engine(
 			'handlebars',
 			engine({
@@ -30,8 +30,8 @@ export default class ServerExpress {
 				},
 			})
 		);
-		this._instance.set('view engine', 'handlebars');
 
+		this._instance.set('view engine', 'handlebars');
 		this._instance.set('views', path.resolve(__dirname, './views'));
 		this._instance.use(express.static(path.resolve(__dirname, './public')));
 
@@ -45,6 +45,7 @@ export default class ServerExpress {
 			port: getConfig('/database/port'),
 		};
 
+		// Using DI (Dependencu Injection) to inject the database manager and easy to test...
 		this._db = new DatabaseManager(dbConfig);
 		const routes = new Routes(this._db);
 		this._instance.use('/', routes.router);

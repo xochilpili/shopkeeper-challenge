@@ -21,6 +21,7 @@ export class DatabaseManager {
 	}
 
 	async getAverageGroupedPerSite(start_date: string, end_date: string): Promise<any[]> {
+		// Not enough permissions to create views, functions, etc. So I will use an ugly query
 		const query = `
 			with months as (
 				select 

@@ -4,11 +4,11 @@ import { DatabaseManager } from './db';
 
 export default class RouteHandler {
 	constructor(private databaseManager: DatabaseManager) {}
-
+	// TODO: Move this to a utility lib
 	private randomInt(min: number, max: number) {
 		return Math.floor(Math.random() * (max - min + 1) + min);
 	}
-
+	// TODO: Move this to a utility lib
 	private rowToDataset(items: any[]) {
 		const dataset = new Map<string, Record<string, any>>();
 		const labels = new Set<string>();
